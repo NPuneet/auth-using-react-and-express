@@ -1,8 +1,19 @@
 const User = require("../models/index");
 
-const getUser = async (req, res) => {
-  return res.send("moye started");
+const getUser = (req, res) => {
+  User.find({})
+    .then((result) => {
+      console.log("records fetched: ", result);
+      res.json(result);
+    })
+    .catch((err) => {
+      res.json({ message: "error fetching records" });
+    });
 };
+const getUserById = async (req, res) => {
+  res.json({ message: `Welcome to the profile of ${req.params.username}` });
+};
+
 const createUser = async (req, res) => {
   const jsonData = User(req.body);
   console.log(jsonData);
@@ -12,4 +23,5 @@ const createUser = async (req, res) => {
 module.exports = {
   getUser,
   createUser,
+  getUserById,
 };
